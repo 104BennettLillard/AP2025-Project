@@ -1,5 +1,6 @@
 import PIL
 import tkinter as tk
+from PIL import Image, ImageTk
 class App:
   # The intial framework for the start and gender pages, as well as the show_frame procedures take credit from Chatgpt
     def __init__(self, root):
@@ -36,6 +37,15 @@ class App:
         reset_button.grid(column=1,row=1)
         nxt_button = tk.Button(frame, text="Continue ->", command=lambda: self.show_frame("third"))
         nxt_button.grid(column=0,row=1)
+        # load images for both male and female
+        male_img = Image.open("MaleOutfits/Male.png")
+        female_img = Image.open("FemaleOutfits/Female.png")
+        # Now create the buttons
+        male_button = tk.Button(frame, image=self.male_img)
+        female_button = tk.Button(frame, image=self.female_img)
+        # Create photoinstances of the images
+        self.Male_photo = ImageTk.PhotoImage(male_img)
+        self.Female_photo = ImageTk.PhotoImage(female_img)
         # Store frame to switch later
         self.frames["second"] = frame
       # frame 3
