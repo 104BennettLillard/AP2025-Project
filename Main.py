@@ -40,12 +40,14 @@ class App:
         # load images for both male and female
         male_img = Image.open("MaleOutfits/Male.png")
         female_img = Image.open("FemaleOutfits/Female.png")
-        # Now create the buttons
-        male_button = tk.Button(frame, image=self.male_img)
-        female_button = tk.Button(frame, image=self.female_img)
         # Create photoinstances of the images
-        self.Male_photo = ImageTk.PhotoImage(male_img)
-        self.Female_photo = ImageTk.PhotoImage(female_img)
+        self.male_photo = ImageTk.PhotoImage(male_img)
+        self.female_photo = ImageTk.PhotoImage(female_img)
+        # Now create the buttons
+        male_button = tk.Button(frame, image=self.male_photo)
+        male_button.grid(column=0,row=2)
+        female_button = tk.Button(frame, image=self.female_photo)
+        female_button.grid(column=1,row=2)
         # Store frame to switch later
         self.frames["second"] = frame
       # frame 3
