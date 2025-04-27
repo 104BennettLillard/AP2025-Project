@@ -12,12 +12,7 @@ isMale = True  # Default gender (can be changed later)
 #the isMale boolean will be decided depending on a 0 or 1. 0 is male, and 1 is female
 def gender_picked(gender):
     global isMale
-    if (gender == 0):
-        isMale = True
-        return
-    else:
-        isMale = False
-        return
+    isMale = gender
     
 def skin_color_picked(idx):
         global final_skin_color
@@ -43,7 +38,7 @@ def outfit_picked(idx):
         global final_outfit
         global isMale
         outfit_path = " "
-        if isMale:
+        if isMale == True:
             outfit_path = "MaleOutfits/"
             outfits = ["MaRed.png", "MaOrange.png", "MaYellow.png", "MaGreen.png", "MaBlue.png", "MaPurple.png", "MaPink.png", "MaBlack.png"]
         else:
@@ -53,6 +48,7 @@ def outfit_picked(idx):
         final_outfit = outfit_path + outfits[idx]
         return
 def finalize_character(self):
+    global isMale
     global final_skin_color
     global final_eye_color
     global final_hair_color
@@ -72,9 +68,13 @@ def finalize_character(self):
             final_outfit = "FemaleOutfits/FeRed.png"  # example fallback for females
     # Load images
     skin_image = Image.open(final_skin_color)
+    skin_image = skin_image.resize((115,115))
     eye_image = Image.open(final_eye_color)
+    eye_image = eye_image.resize((82,48))
     hair_image = Image.open(final_hair_color)
+    hair_image = hair_image.resize((144,112))
     outfit_image = Image.open(final_outfit)
+    outfit_image = outfit_image.resize((144,288))
 
     # Convert for Tkinter
     self.skin_photo = ImageTk.PhotoImage(skin_image)
@@ -86,7 +86,7 @@ def finalize_character(self):
     self.final_canvas.delete("all")
 
     # Draw images centered at (200, 300)
-    self.final_canvas.create_image(400, 490, image=self.outfit_photo)
-    self.final_canvas.create_image(400, 325, image=self.skin_photo)
-    self.final_canvas.create_image(400, 300, image=self.eye_photo)
-    self.final_canvas.create_image(400, 290, image=self.hair_photo)
+    self.final_canvas.create_image(200, 150, image=self.outfit_photo)
+    self.final_canvas.create_image(200, 70, image=self.skin_photo)
+    self.final_canvas.create_image(200, 63, image=self.eye_photo)
+    self.final_canvas.create_image(200, 50, image=self.hair_photo)
