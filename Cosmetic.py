@@ -19,3 +19,10 @@ def skin_color_picked(idx):
         final_skin_color = skin_color_path + colors[idx]
         return
 
+def eye_color_picked(idx):
+        global final_eye_color
+        eye_color_path = "EyeColors/"
+        eye_colors = ["Amber.png", "Black.png", "Blue.png", "Brown.png", "Green.png", "Hazel.png"]
+        final_eye_color = eye_color_path + eye_colors[idx]
+        return
+

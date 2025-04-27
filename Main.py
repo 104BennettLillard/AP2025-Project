@@ -1,10 +1,11 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
-from Cosmetic import gender_picked, skin_color_picked
+from Cosmetic import gender_picked, skin_color_picked, eye_color_picked
 
 isMale = True
 final_skin_color = "Face Colors/Color1.png"
+final_eye_color = "EyeColors/Amber.png"
 class App:
   # The intial framework for the start and gender pages, as well as the show_frame procedures take credit from Chatgpt
     def __init__(self, root):
@@ -64,6 +65,7 @@ class App:
         reset_button.grid(column=1,row=1)
         nxt_button = tk.Button(frame, text="Continue ->", command=lambda: self.show_frame("fourth"))
         nxt_button.grid(column=0,row=1)
+        # iteration time. This will create a grid of buttons with all skin tones
         skin_color_path = "Face Colors/"
         colors = ["Color1.png", "Color2.png", "Color3.png", "Color4.png", "Color5.png", "Color6.png", "Color7.png","Color8.png","Color9.png","Color10.png"]
         i = 1
@@ -84,12 +86,27 @@ class App:
     def create_eyecolor_page(self):
         frame = tk.Frame(self.root)
         label = tk.Label(frame, text="Pick a Eye Color.")
-        label.pack(pady=20)
+        label.grid(column=0,row=0)
         # Back to home page button
         reset_button = tk.Button(frame, text="Reset", command=lambda: self.show_frame("start"))
-        reset_button.pack(pady=10)
+        reset_button.grid(column=1,row=1)
         nxt_button = tk.Button(frame, text="Continue ->", command=lambda: self.show_frame("fifth"))
-        nxt_button.pack(pady=10)
+        nxt_button.grid(column=0,row=1)
+        # Iterate through all the eyes and make a grid of buttons
+        eye_color_path = "EyeColors/"
+        eye_colors = ["Amber.png", "Black.png", "Blue.png", "Brown.png", "Green.png", "Hazel.png"]
+        i = 1
+        for idx, color in enumerate(eye_colors):
+          color_img = Image.open(eye_color_path + color)
+          self.color_photo = ImageTk.PhotoImage(color_img)
+          color_btn = tk.Button(frame, image=self.color_photo)
+          color_btn.image = self.color_photo #to avoid garbage collection
+          if idx % 2 == 0:
+              color_btn.grid(row=2, column=(idx // 2))
+          else:
+              color_btn.grid(row=3, column=(idx - i))
+              i += 1
+
         # Store frame to switch later
         self.frames["fourth"] = frame
       # frame 5
