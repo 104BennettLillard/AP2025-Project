@@ -2,6 +2,13 @@ import PIL
 import tkinter as tk
 from PIL import Image, ImageTk
 
+# Initialize global variables with default values (Github Copilot)
+final_skin_color = "none"
+final_eye_color = "none"
+final_hair_color = "none"
+final_outfit = "none"
+isMale = True  # Default gender (can be changed later)
+
 #the isMale boolean will be decided depending on a 0 or 1. 0 is male, and 1 is female
 def gender_picked(gender):
     global isMale
@@ -45,4 +52,41 @@ def outfit_picked(idx):
 
         final_outfit = outfit_path + outfits[idx]
         return
+def finalize_character(self):
+    global final_skin_color
+    global final_eye_color
+    global final_hair_color
+    global final_outfit
 
+     # Set defaults if any of the options are missing
+    if final_skin_color == "none":
+        final_skin_color = "Face Colors/Color1.png"
+    if final_eye_color == "none":
+        final_eye_color = "EyeColors/Amber.png"
+    if final_hair_color == "none":
+        final_hair_color = "Hair/BrownShort.png"
+    if final_outfit == "none":
+        if isMale:
+            final_outfit = "MaleOutfits/MaRed.png"
+        else:
+            final_outfit = "FemaleOutfits/FeRed.png"  # example fallback for females
+    # Load images
+    skin_image = Image.open(final_skin_color)
+    eye_image = Image.open(final_eye_color)
+    hair_image = Image.open(final_hair_color)
+    outfit_image = Image.open(final_outfit)
+
+    # Convert for Tkinter
+    self.skin_photo = ImageTk.PhotoImage(skin_image)
+    self.eye_photo = ImageTk.PhotoImage(eye_image)
+    self.hair_photo = ImageTk.PhotoImage(hair_image)
+    self.outfit_photo = ImageTk.PhotoImage(outfit_image)
+
+    # Clear the canvas first if needed
+    self.final_canvas.delete("all")
+
+    # Draw images centered at (200, 300)
+    self.final_canvas.create_image(400, 490, image=self.outfit_photo)
+    self.final_canvas.create_image(400, 325, image=self.skin_photo)
+    self.final_canvas.create_image(400, 300, image=self.eye_photo)
+    self.final_canvas.create_image(400, 290, image=self.hair_photo)

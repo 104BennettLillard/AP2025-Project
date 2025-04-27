@@ -1,13 +1,13 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
-from Cosmetic import gender_picked, skin_color_picked, eye_color_picked, outfit_picked, hair_picked
+from Cosmetic import gender_picked, skin_color_picked, eye_color_picked, outfit_picked, hair_picked, finalize_character
 
 isMale = True
-final_skin_color = "Face Colors/Color1.png"
-final_eye_color = "EyeColors/Amber.png"
-final_hair_color = "Hair/BrownShort.png"
-final_outfit = "MaleOutfits/MaRed.png"
+final_skin_color = "none"
+final_eye_color = "none"
+final_hair_color = "none"
+final_outfit = "none"
 class App:
   # The intial framework for the start and gender pages, as well as the show_frame procedures take credit from Chatgpt
     def __init__(self, root):
@@ -75,7 +75,7 @@ class App:
         for idx, color in enumerate(colors):
           color_img = Image.open(skin_color_path + color)
           self.color_photo = ImageTk.PhotoImage(color_img)
-          color_btn = tk.Button(frame, image=self.color_photo, command=skin_color_picked(idx))
+          color_btn = tk.Button(frame, image=self.color_photo, command=lambda idx=idx:skin_color_picked(idx))
           color_btn.image = self.color_photo  # Keep a reference to avoid garbage collection (Github copilot)
           if idx % 2 == 0:
               color_btn.grid(row=2, column=(idx // 2))
@@ -102,7 +102,7 @@ class App:
         for idx, color in enumerate(eye_colors):
           color_img = Image.open(eye_color_path + color)
           self.color_photo = ImageTk.PhotoImage(color_img)
-          color_btn = tk.Button(frame, image=self.color_photo, command=eye_color_picked(idx))
+          color_btn = tk.Button(frame, image=self.color_photo, command=lambda idx=idx: eye_color_picked(idx))
           color_btn.image = self.color_photo #to avoid garbage collection
           if idx % 2 == 0:
               color_btn.grid(row=2, column=(idx // 2))
@@ -129,7 +129,7 @@ class App:
         for idx, color in enumerate(hair):
           hair_img = Image.open(hair_color_path + color)
           self.color_photo = ImageTk.PhotoImage(hair_img)
-          color_btn = tk.Button(frame, image=self.color_photo, command=hair_picked(idx))
+          color_btn = tk.Button(frame, image=self.color_photo, command=lambda idx=idx: hair_picked(idx))
           color_btn.image = self.color_photo #to avoid garbage collection
           if idx % 2 == 0:
               color_btn.grid(row=2, column=(idx // 2))
@@ -147,7 +147,7 @@ class App:
         # Back to home page button
         reset_button = tk.Button(frame, text="Reset", command=lambda: self.show_frame("start"))
         reset_button.grid(column=1,row=1)
-        nxt_button = tk.Button(frame, text="Continue ->", command=lambda: self.show_frame("final"))
+        nxt_button = tk.Button(frame, text="Continue ->", command=self.finalize_and_show)
         nxt_button.grid(column=0,row=1)
         # iterate through all the outfits and make a grid of buttons
         outfit_path = "MaleOutfits/"
@@ -155,7 +155,7 @@ class App:
         for idx, outfit in enumerate(outfits):
           outfit_img = Image.open(outfit_path + outfit)
           self.outfit_photo = ImageTk.PhotoImage(outfit_img)
-          outfit_btn = tk.Button(frame, image=self.outfit_photo, command=outfit_picked(idx))
+          outfit_btn = tk.Button(frame, image=self.outfit_photo, command=lambda idx=idx: outfit_picked(idx))
           outfit_btn.image = self.outfit_photo #to avoid garbage collection
           if idx > 3:
               outfit_btn.grid(row=3, column=(idx - 4))
@@ -168,10 +168,13 @@ class App:
     def create_final_page(self):
         frame = tk.Frame(self.root)
         label = tk.Label(frame, text="How do you like it?")
-        label.pack(pady=20)
+        label.grid(column=0, row=0)
         # Back to home page button
-        reset_button = tk.Button(frame, text="Reset", command=lambda: self.show_frame("start"))
-        reset_button.pack(pady=10)
+        reset_button = tk.Button(frame, text="Reset", command=self.reset_game)
+        reset_button.grid(column=0, row=1)
+        # The canvas will be used to display the final character
+        self.final_canvas = tk.Canvas(frame, width=750, height=750)
+        self.final_canvas.grid(row=1, column=2, columnspan=2)
         # Store frame to switch later
         self.frames["final"] = frame
     def show_frame(self, page_name):
@@ -180,6 +183,19 @@ class App:
             frame.pack_forget()
         # Show the selected frame
         self.frames[page_name].pack()
+#once the user has selected all the options, the final page will show up with the character they made
+    def finalize_and_show(self):
+      self.show_frame("final")
+      finalize_character(self)
+
+    def reset_game(self):
+      self.show_frame("start")
+      final_skin_color = "none"
+      final_eye_color = "none"
+      final_hair_color = "none"
+      final_outfit = "none"
+      isMale = True 
+
 # Create the Tkinter root window
 root = tk.Tk()
 # Create the application object
