@@ -1,11 +1,12 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
-from Cosmetic import gender_picked, skin_color_picked, eye_color_picked
+from Cosmetic import gender_picked, skin_color_picked, eye_color_picked, outfit_picked
 
 isMale = True
 final_skin_color = "Face Colors/Color1.png"
 final_eye_color = "EyeColors/Amber.png"
+final_outfit = "MaleOutfits/MaRed.png"
 class App:
   # The intial framework for the start and gender pages, as well as the show_frame procedures take credit from Chatgpt
     def __init__(self, root):
@@ -99,7 +100,7 @@ class App:
         for idx, color in enumerate(eye_colors):
           color_img = Image.open(eye_color_path + color)
           self.color_photo = ImageTk.PhotoImage(color_img)
-          color_btn = tk.Button(frame, image=self.color_photo)
+          color_btn = tk.Button(frame, image=self.color_photo, command=eye_color_picked(idx))
           color_btn.image = self.color_photo #to avoid garbage collection
           if idx % 2 == 0:
               color_btn.grid(row=2, column=(idx // 2))
@@ -113,13 +114,25 @@ class App:
     def create_outfits_page(self):
         frame = tk.Frame(self.root)
         label = tk.Label(frame, text="The best part: Pick your favorite outfit")
-        label.pack(pady=20)
+        label.grid(column=0,row=0)
         # Back to home page button
         reset_button = tk.Button(frame, text="Reset", command=lambda: self.show_frame("start"))
-        reset_button.pack(pady=10)
+        reset_button.grid(column=1,row=1)
         nxt_button = tk.Button(frame, text="Continue ->", command=lambda: self.show_frame("sixth"))
-        nxt_button.pack(pady=10)
-    
+        nxt_button.grid(column=0,row=1)
+        # iterate through all the outfits and make a grid of buttons
+        outfit_path = "MaleOutfits/"
+        outfits = ["MaRed.png", "MaOrange.png", "MaYellow.png", "MaGreen.png", "MaBlue.png", "MaPurple.png", "MaPink.png", "MaBlack.png"]
+        for idx, outfit in enumerate(outfits):
+          outfit_img = Image.open(outfit_path + outfit)
+          self.outfit_photo = ImageTk.PhotoImage(outfit_img)
+          outfit_btn = tk.Button(frame, image=self.outfit_photo)
+          outfit_btn.image = self.outfit_photo #to avoid garbage collection
+          if idx > 3:
+              outfit_btn.grid(row=3, column=(idx - 4))
+          else:
+              outfit_btn.grid(row=2, column=(idx))
+             
       # Store frame to switch later
         self.frames["fifth"] = frame
     # frame 6

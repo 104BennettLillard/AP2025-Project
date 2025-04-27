@@ -26,3 +26,17 @@ def eye_color_picked(idx):
         final_eye_color = eye_color_path + eye_colors[idx]
         return
 
+def outfit_picked(idx):
+        global final_outfit
+        global isMale
+        outfit_path = " "
+        if isMale:
+            outfit_path = "MaleOutfits/"
+            outfits = ["MaRed.png", "MaOrange.png", "MaYellow.png", "MaGreen.png", "MaBlue.png", "MaPurple.png", "MaPink.png", "MaBlack.png"]
+        else:
+             outfit_path = "FemaleOutfits/"
+             outfits = ["FeRed.png", "FeOrange.png", "FeYellow.png", "FeGreen.png", "FeBlue.png", "FePurple.png", "FePink.png", "FeBlack.png"]  
+
+        final_outfit = outfit_path + outfits[idx]
+        return
+
