@@ -26,6 +26,12 @@ def eye_color_picked(idx):
         final_eye_color = eye_color_path + eye_colors[idx]
         return
 
+def hair_picked(idx):
+        global final_hair_color
+        hair_path = "Hair/"
+        hair = ["BrownShort.png", "BlondeShort.png", "BrownBun.png", "BlondeBun.png", "BrownLong.png", "BlondeLong.png"]
+        final_hair_color = hair_path + hair[idx]
+        return
 def outfit_picked(idx):
         global final_outfit
         global isMale

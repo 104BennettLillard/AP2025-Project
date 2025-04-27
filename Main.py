@@ -1,11 +1,12 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
-from Cosmetic import gender_picked, skin_color_picked, eye_color_picked, outfit_picked
+from Cosmetic import gender_picked, skin_color_picked, eye_color_picked, outfit_picked, hair_picked
 
 isMale = True
 final_skin_color = "Face Colors/Color1.png"
 final_eye_color = "EyeColors/Amber.png"
+final_hair_color = "Hair/BrownShort.png"
 final_outfit = "MaleOutfits/MaRed.png"
 class App:
   # The intial framework for the start and gender pages, as well as the show_frame procedures take credit from Chatgpt
@@ -19,9 +20,10 @@ class App:
         self.create_gender_page()
         self.create_skcolor_page()
         self.create_eyecolor_page()
+        self.create_hair_page()
         self.create_outfits_page()
         self.create_final_page()
-      # frame 1
+  # frame 1
     def create_start_page(self):
         frame = tk.Frame(self.root)
         label = tk.Label(frame, text="Are you ready to make your character?")
@@ -33,7 +35,7 @@ class App:
         self.frames["start"] = frame
         # Pack the frame
         frame.pack()
-      # frame 2
+  # frame 2
     def create_gender_page(self):
         frame = tk.Frame(self.root)
         label = tk.Label(frame, text="Pick a Gender.")
@@ -56,7 +58,7 @@ class App:
         female_button.grid(column=1,row=2)
         # Store frame to switch later
         self.frames["second"] = frame
-      # frame 3
+  # frame 3
     def create_skcolor_page(self):
         frame = tk.Frame(self.root)
         label = tk.Label(frame, text="Pick a Skin Color.")
@@ -83,7 +85,7 @@ class App:
 
         # Store frame to switch later
         self.frames["third"] = frame
-      # frame 4
+  # frame 4
     def create_eyecolor_page(self):
         frame = tk.Frame(self.root)
         label = tk.Label(frame, text="Pick a Eye Color.")
@@ -110,7 +112,34 @@ class App:
 
         # Store frame to switch later
         self.frames["fourth"] = frame
-      # frame 5
+  # frame 5
+    def create_hair_page(self):
+        frame = tk.Frame(self.root)
+        label = tk.Label(frame, text="Pick a Hair Color.")
+        label.grid(column=0,row=0)
+        # Back to home page button
+        reset_button = tk.Button(frame, text="Reset", command=lambda: self.show_frame("start"))
+        reset_button.grid(column=1,row=1)
+        nxt_button = tk.Button(frame, text="Continue ->", command=lambda: self.show_frame("sixth"))
+        nxt_button.grid(column=0,row=1)
+        # Iterate through all the hair colors and make a grid of buttons
+        hair_color_path = "Hair/"
+        hair = ["BrownShort.png", "BlondeShort.png", "BrownBun.png", "BlondeBun.png", "BrownLong.png", "BlondeLong.png"]
+        i = 1
+        for idx, color in enumerate(hair):
+          hair_img = Image.open(hair_color_path + color)
+          self.color_photo = ImageTk.PhotoImage(hair_img)
+          color_btn = tk.Button(frame, image=self.color_photo, command=hair_picked(idx))
+          color_btn.image = self.color_photo #to avoid garbage collection
+          if idx % 2 == 0:
+              color_btn.grid(row=2, column=(idx // 2))
+          else:
+              color_btn.grid(row=3, column=(idx - i))
+              i += 1
+        
+        # Store frame to switch later
+        self.frames["fifth"] = frame
+  # frame 6
     def create_outfits_page(self):
         frame = tk.Frame(self.root)
         label = tk.Label(frame, text="The best part: Pick your favorite outfit")
@@ -118,7 +147,7 @@ class App:
         # Back to home page button
         reset_button = tk.Button(frame, text="Reset", command=lambda: self.show_frame("start"))
         reset_button.grid(column=1,row=1)
-        nxt_button = tk.Button(frame, text="Continue ->", command=lambda: self.show_frame("sixth"))
+        nxt_button = tk.Button(frame, text="Continue ->", command=lambda: self.show_frame("final"))
         nxt_button.grid(column=0,row=1)
         # iterate through all the outfits and make a grid of buttons
         outfit_path = "MaleOutfits/"
@@ -126,7 +155,7 @@ class App:
         for idx, outfit in enumerate(outfits):
           outfit_img = Image.open(outfit_path + outfit)
           self.outfit_photo = ImageTk.PhotoImage(outfit_img)
-          outfit_btn = tk.Button(frame, image=self.outfit_photo)
+          outfit_btn = tk.Button(frame, image=self.outfit_photo, command=outfit_picked(idx))
           outfit_btn.image = self.outfit_photo #to avoid garbage collection
           if idx > 3:
               outfit_btn.grid(row=3, column=(idx - 4))
@@ -134,8 +163,8 @@ class App:
               outfit_btn.grid(row=2, column=(idx))
              
       # Store frame to switch later
-        self.frames["fifth"] = frame
-    # frame 6
+        self.frames["sixth"] = frame
+  # final frame
     def create_final_page(self):
         frame = tk.Frame(self.root)
         label = tk.Label(frame, text="How do you like it?")
@@ -144,7 +173,7 @@ class App:
         reset_button = tk.Button(frame, text="Reset", command=lambda: self.show_frame("start"))
         reset_button.pack(pady=10)
         # Store frame to switch later
-        self.frames["sixth"] = frame
+        self.frames["final"] = frame
     def show_frame(self, page_name):
         # Hide all frames
         for frame in self.frames.values():
