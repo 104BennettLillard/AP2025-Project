@@ -9,6 +9,7 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("Multipage Tkinter Application")
+        self.root.configure(bg="lightpink")  # Set the background color of the root window (Github Copilot)
         # Create a container for all frames
         self.frames = {}
         # Initialize frames
@@ -21,7 +22,7 @@ class App:
         self.create_final_page()
   # frame 1
     def create_start_page(self):
-        frame = tk.Frame(self.root)
+        frame = tk.Frame(self.root, background="lightpink")
         label = tk.Label(frame, text="Are you ready to make your character?", font=("Arial", 24))
         label.grid(column=0,row=0)
         # Switch to second page button
@@ -33,7 +34,7 @@ class App:
         frame.pack()
   # frame 2
     def create_gender_page(self):
-        frame = tk.Frame(self.root)
+        frame = tk.Frame(self.root, background="lightpink")
         label = tk.Label(frame, text="Pick a Gender.", font=("Arial", 24))
         label.grid(column=1,row=0, columnspan=2)
         # Back to home page button
@@ -58,7 +59,7 @@ class App:
         self.frames["second"] = frame
   # frame 3
     def create_skcolor_page(self):
-        frame = tk.Frame(self.root)
+        frame = tk.Frame(self.root, background="lightpink")
         label = tk.Label(frame, text="Pick Any Skin Color.", font=("Arial", 24))
         label.grid(column=1,row=0, columnspan=3)
         # Back to home page button
@@ -86,7 +87,7 @@ class App:
         self.frames["third"] = frame
   # frame 4
     def create_eyecolor_page(self):
-        frame = tk.Frame(self.root)
+        frame = tk.Frame(self.root, background="lightpink")
         label = tk.Label(frame, text="Choose Your Eye Color.", font=("Arial", 24))
         label.grid(column=0,row=0, columnspan=3)
         # Back to home page button
@@ -113,7 +114,7 @@ class App:
         self.frames["fourth"] = frame
   # frame 5
     def create_hair_page(self):
-        frame = tk.Frame(self.root)
+        frame = tk.Frame(self.root, background="lightpink")
         label = tk.Label(frame, text="Pick a Hair Color.", font=("Arial", 24))
         label.grid(column=0,row=0,columnspan=3)
         # Back to home page button
@@ -140,7 +141,7 @@ class App:
         self.frames["fifth"] = frame
   # frame 6
     def create_outfits_page(self):
-        frame = tk.Frame(self.root)
+        frame = tk.Frame(self.root, background="lightpink")
         label = tk.Label(frame, text="The Best Part: Select Your Favorite Outfit", font=("Arial", 24))
         label.grid(column=0,row=0,columnspan=4)
         # Back to home page button
@@ -166,14 +167,14 @@ class App:
         self.frames["sixth"] = frame
   # final frame
     def create_final_page(self):
-        frame = tk.Frame(self.root)
+        frame = tk.Frame(self.root, background="lightpink")
         label = tk.Label(frame, text="How do you like it?", font=("Arial", 24))
         label.grid(column=0, row=0)
         # Back to home page button
         reset_button = tk.Button(frame, text="Reset", command=self.reset_game, font=("Arial", 30))
         reset_button.grid(column=0, row=1)
         # The canvas will be used to display the final character
-        self.final_canvas = tk.Canvas(frame, width=400, height=400)
+        self.final_canvas = tk.Canvas(frame, width=400, height=400, background="lightpink", highlightthickness=0)
         self.final_canvas.grid(row=2, column=0)
         # Store frame to switch later
         self.frames["final"] = frame
