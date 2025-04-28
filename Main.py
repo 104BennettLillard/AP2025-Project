@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
+# Pillow needs to be downloaded for the code to work
 
 from Cosmetic import gender_picked, skin_color_picked, eye_color_picked, outfit_picked, hair_picked, finalize_character
 
