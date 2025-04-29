@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 # Pillow needs to be downloaded for the code to work
 # pip install pillow
 # Code was finished in Visual Studio Code
-# All assets were made in google slides and downloaded as pngs
+# All assets were made in google slides and downloaded as pngs. they're needed for the application to work
 
 from Cosmetic import gender_picked, skin_color_picked, eye_color_picked, outfit_picked, hair_picked, finalize_character
 
