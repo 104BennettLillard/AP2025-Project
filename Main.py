@@ -1,6 +1,9 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 # Pillow needs to be downloaded for the code to work
+# pip install pillow
+# Code was finished in Visual Studio Code
+# All assets were made in google slides and downloaded as pngs
 
 from Cosmetic import gender_picked, skin_color_picked, eye_color_picked, outfit_picked, hair_picked, finalize_character
 
@@ -21,7 +24,7 @@ class App:
         self.create_hair_page()
         self.create_outfits_page()
         self.create_final_page()
-  # frame 1
+  # frame 1 (by chatgpt)
     def create_start_page(self):
         frame = tk.Frame(self.root, background="lightpink")
         label = tk.Label(frame, text="Are you ready to make your character?", font=("Arial", 24))
@@ -33,7 +36,7 @@ class App:
         self.frames["start"] = frame
         # Pack the frame
         frame.pack()
-  # frame 2
+  # frame 2 (by chatgpt. Buttons and images were coded in afterwards)
     def create_gender_page(self):
         frame = tk.Frame(self.root, background="lightpink")
         label = tk.Label(frame, text="Pick a Gender.", font=("Arial", 24))
@@ -179,7 +182,7 @@ class App:
         self.final_canvas.grid(row=2, column=0)
         # Store frame to switch later
         self.frames["final"] = frame
-    def show_frame(self, page_name):
+    def show_frame(self, page_name): #chatgpt implementation
         # Hide all frames
         for frame in self.frames.values():
             frame.pack_forget()

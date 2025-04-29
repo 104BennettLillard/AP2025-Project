@@ -66,7 +66,7 @@ def finalize_character(self):
             final_outfit = "MaleOutfits/MaRed.png"
         else:
             final_outfit = "FemaleOutfits/FeRed.png"  # example fallback for females
-    # Load images
+    # Load images (lines 69 - 93 were implemented by chatGPT, and altered secondarily for finalization)
     skin_image = Image.open(final_skin_color)
     skin_image = skin_image.resize((115,115))
     eye_image = Image.open(final_eye_color)
